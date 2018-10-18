@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>三栏布局</title>
+    <style>
+        .container{
+            padding: 0 200px;
+            overflow: hidden;
+        }
+       .middle{
+           width: 100%;
+           height: 200px;
+           background-color: #0aa;
+           float: left;
+       }
+       .left{
+           width: 200px;
+           height: 200px;
+           background-color: #ff0;
+           float: left;
+           /* !! */
+           margin-left: -100%;
+           position: relative;
+           left: -200px;
+       }
+       .right{
+           width: 200px;
+           height: 200px;
+           background-color: #f00;
+           float: left;
+           /* !! */
+           margin-left: -200px;
+           position: relative;
+           right: -200px;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 中间自适应 两边为固定宽度 -->
+        <div class="middle">111我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间000</div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>
