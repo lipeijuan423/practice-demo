@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两种常用的继承</title>
+</head>
+<body>
+    <script>
+     /* 组合继承 */
+    function SuperType () {
+        this.name = 'gg';
+        this.color = ['1','red','2','blue','3','green'];
+    }
+    superType.prototype.sayName = function () {
+        console.log(this.name)
+    }
+    function SubType (name, age) {
+        // 继承属性
+    SuperType.call(this, name); // 2. t=调用
+    this.age = age;
+    }
+    // 先原型继承
+    SubType.prototype = new SuperType(); // 1.调用
+    // 添加SubType自己的方法
+    SubType.prototype.sayAge = function () {
+        console.log(this.age);
+    }
+    var instance = new SubType('lpj', 22)
+    /*  寄生组合继承： 为了解决组合继承调用两次SuperType 超类型构造函数 */
+    function inheritancePrototype (subType, superType) {
+        var prototype = object(superType.prototype); // 创建对象
+        prototype.constructor = subType; // 增强对象
+        subType.prototype = prototype; // 指定对象
+    }
+    function SuperType() {
+        this.name = 'gg';
+        this.color = ['1', 'red', '2', 'blue', '3', 'green'];
+    }
+    superType.prototype.sayName = function () {
+        console.log(this.name)
+    }
+    function SubType(name, age) {
+        // 继承属性
+        SuperType.call(this, name);
+        this.age = age;
+    }
+    inheritancePrototype(SubType, SuperType);
+    SubType.prototype.sayAge = function () {
+        console.log(this.age);
+    }
+    </script>
+</body>
+</html>
