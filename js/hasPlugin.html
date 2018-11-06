@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>navigtor检测插件</title>
+</head>
+<body>
+    <script>
+        function hasPlugin(name) {
+            name = name.toLowerCase();
+            for (var i = 0; i < navigator.plugins.length; i++){
+                if (navigator.plugins[i].name.toLowerCase().indexOf(name) > -1) {
+                    return true
+                }
+            }
+            return false;
+        }
+        hasPlugin('Flash');
+        /* IE */
+        function hasIEPlugin (name) {
+            try{
+                // 创建一个实例 COM对象标识符
+                new ActiveXObject(name);
+                return true;
+            }catch(ex){
+                return false;
+            }
+        }
+        // 检测QuickTime,先知道COM对象
+        hasIEPlugin('QuickTime.QuickTime');
+
+
+        // 典型
+        function hasFlash(){
+            var result = hasPlugin('Flash');
+            if (!result) {
+                result = hasIEPlugin('ShockwaveFlash.ShockwaveFlash');
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>
