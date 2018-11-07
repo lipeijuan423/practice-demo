@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 数额千分位用逗号隔开
+        function filter(number, decimals = 2, docPoint = '.', thousandsSep = ',') {
+            number = (number + '').replace(/[^0-9+-Ee.]/g, '')
+            let n = !isFinite(+number) ? 0 : +number;
+            let perc = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+            let sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+            let dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+            let s = '';
+            let toFixedFix = function (n, perc) {
+                var k = Math.pow(10, perc)
+                return '' + Math.ceil(n * k) / k
+            }
+            s = (perc ? toFixedFix(n, perc) : '' + Math.round(n)).split('.')
+            var re = /(-?\d+)(\d{3})/
+            console.log(s[0])
+            while (re.test(s[0])) {
+                s[0] = s[0].replace(re, '$1' + sep + '$2')
+            }
+
+            if ((s[1] || '').length < perc) {
+                s[1] = s[1] || ''
+                s[1] += new Array(perc - s[1].length + 1).join('0')
+            }
+            return s.join(dec)
+        }
+    </script>
+</body>
+</html>
