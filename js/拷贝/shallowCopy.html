@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        (function () {
+            let a = [1,2];;
+            let b = a.slice();
+            let e = {v: 2, a: [1],b:{d:1}};
+            let f = Object.create(e)
+            function shallowCopy (obj) {
+                if (typeof obj === 'object' && obj !== null) {
+                    if (Array.isArray(obj)) {
+                        // 数组直接slice 就是浅拷贝
+                        return obj.slice()
+                    } else {
+                        let result = {}
+                        Object.keys(obj).forEach((item, i) => {
+                            console.log(i);
+                            result[item] = obj[item]
+                        })
+                        return result
+                    }
+                } else {
+                    return obj
+                }
+            }
+            console.log(shallowCopy(a))
+            console.log(shallowCopy(b))
+            console.log(shallowCopy(e))
+            console.log(shallowCopy(f))
+        })()
+    </script>
+</body>
+</html>

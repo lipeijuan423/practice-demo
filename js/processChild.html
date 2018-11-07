@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>元素遍历</title>
+</head>
+<body>
+	<div class="demo1"></div>
+	<div class="demo2"></div>
+<script type="text/javascript">
+		
+	function processChild(element) {
+		// 已知是元素
+		var i=0,len,child=element.firstElementChild;
+		while(child != element.lastElementChild){
+			processChild(child);
+			child = child.nextElementSibling;
+			console.log(child)
+		}
+	}
+	processChild(document.body)
+</script>
+</body>
+</html>
