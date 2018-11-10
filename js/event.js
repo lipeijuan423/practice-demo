@@ -106,6 +106,19 @@ var EventUtil = {
       // 可能为0 也可能是编码
       return event.keyCode;
     }
+  },
+  // 访问剪切版的数据
+  getClipboardText: function (event) {
+    // ie window ; firefox4+ safari chrome event
+    var clipboardData = (event.clipboardData || window.clipboardData);
+    return clipboardData.getData('text');
+  },
+  setClipboradText: function (event, value) {
+    if (event.clipboardData) {
+      return event.clipboardData.setData('text/palin', value);
+    } else if (window.clipboardData) {
+      return window.clipboardData.set('text', value);
+    }
   }
 }
 // 动态加载图片
@@ -199,5 +212,30 @@ EventUtil.addHandler(window, 'beforeunload', function (event) {
 EventUtil.addHandler(document, 'readystatechange', function(event){
   if (document.readyState == 'interactive' || document.readyState == 'complate') {
     EventUtil.removeHandler(document, 'readystatechange', arguments.callee);
+  }
+})
+// 避免重复提交表单
+EventUtil.addHandler(form, 'submit', function (event) {
+  event = EventUtil.getEvent(event);
+  var target = EventUtil.getTarget(event);
+  var btn = target.elements['submit-btn'];
+  btn.disabled = true;
+})
+// 屏蔽字符
+EventUtil.addHandler(textbox, 'keypress', function (event) {
+  event = EventUtil.getEvent(event);
+  var target = EventUtil.getTarget(event);
+  var charCode = EventUtil.getCharCode(event);
+  // 屏蔽非数字 其他字符 不是和ctrl连用
+  if (/!\d/.test(String.fromCharCode(charCode)) && charCode > 9 && !event.ctrlKey) {
+    EventUtil.preventDefault(event);
+  }
+})
+// 只有数值才会被粘贴到文本框
+EventUtil.addHandler(textbox, 'paste', function (event) {
+  event = event.getEvent(event);
+  var text = EventUtil.getClipboardText(event);
+  if (!/^\d*$/.test(text)) {
+    EventUtil.preventDefault(event);
   }
 })
