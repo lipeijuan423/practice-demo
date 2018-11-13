@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <img src="./head-icon.png" alt="" style="display: inline-block; width: 40px;height:40px;">
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+        var drawing = document.getElementById('drawing');;
+        if (drawing.getContext) {
+            var context = drawing.getContext('2d'),
+                image = document.images[0],
+                imageData, data,
+                i, len, average,
+                red, green, blue, alpha;
+            // 绘制原始图像
+            context.drawImage(image, 0, 0);
+            // 取图像数据
+            imageData = context.getImageData(0, 0, image.width, image.height);
+            console.log(imageData)
+            data = imageData.data;
+            for (i = 0, len = data.length; i < len; i+=4) {
+                red = data[i];
+                green = data[i+1];
+                blue = data[i+2];
+                alpha = data[i+3];
+                average = Math.floor((red + green + blue) / 3);
+                data[i] = average;
+                data[i+1] = average;
+                data[i+2] = average;
+            }
+            imageData.data = data;
+            console.log(imageData)
+            context.putImageData(imageData, 0, 0);
+        }
+    </script>
+</body>
+</html>
