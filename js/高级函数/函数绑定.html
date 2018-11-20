@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="btn">btn</div>
+    <script>
+        var btn = document.getElementById('btn');
+        var handler = {
+            message: '3',
+            handleClick: function (event) {
+                console.log(this.message);
+            }
+        }
+        // 闭包
+        /* btn.addEventListener('click', function(event){
+            console.log(event)
+            handler.handleClick(event);
+        });*/
+        function bind(fn, context){
+            console.log(arguments)
+            return function (){
+                return fn.apply(context, arguments);
+            }
+        }
+        btn.addEventListener('click', bind(handler.handleClick, handler));
+        
+        // btn.addEventListener('click', handler.handleClick)
+    </script>
+</body>
+</html>
