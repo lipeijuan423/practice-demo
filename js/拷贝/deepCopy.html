@@ -8,6 +8,10 @@
 </head>
 <body>
     <script>
+        /* 
+            深拷贝： 拷贝到新的实例
+            $.extend(true, {}, ...) 递归 JSON.stringify(有函数和原型成员会被有意忽略，源对象的方法在拷贝中丢失)
+        */
         function deepCopy(obj) {
                 if (typeof obj === 'object' && obj !== null) {
                     let objKeys = Object.keys(obj)
