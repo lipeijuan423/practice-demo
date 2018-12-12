@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文字变省略号</title>
+  <style>
+    .content{
+      width: 400px;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, impedit. Quasi similique maxime, numquam nulla inventore atque est optio cumque, ea quis sequi expedita deleniti saepe consequuntur explicabo vero earum!</div>
+  <script>
+    function wordLimit(){
+      let dom = document.getElementsByClassName('content')[0];
+      // 扩展 ： 找元素的宽高
+      /* 
+        * window.getComputedStyle() element.currentStyle 默认为content-box
+      */
+      let width = window.getComputedStyle(dom, null).height
+      //console.log(window.getComputedStyle(dom, null).width)
+      //console.log(dom.cloneNode(true))
+      // 复制节点
+      // js改变css dom.style.width = 0;   dom.style.cssText = ""
+      // 克隆加append节点
+      /* 
+        * 不会克隆事件
+      */
+      let domCopy = dom.cloneNode(true)
+      //console.log(domCopy)
+      /* 
+        * obj.className修改类名
+        * obj.style.cssText 修改嵌入式css
+        * obj.style.width 修改html元素上的style属性中值
+        * 更改css文件
+          <link href="css1.css" rel="stylesheet" type="text/css"  id="css"/>
+          function changeStyle4() {
+            var obj = document.getElementById("css");
+            obj.setAttribute("href","css2.css");   }
+      */
+      domCopy.style.cssText = "position: absolute; height: auto; overflow: visible;"
+      document.body.append(domCopy);
+      let realWidth = window.getComputedStyle(domCopy, null).height
+      //console.log(window.getComputedStyle(domCopy, null).width)
+      //console.log(window.getComputedStyle(dom.cloneNode(true), null))
+      /* 限制字符个数 */
+      if (parseFloat(width) < parseFloat(realWidth)) {
+       // console.log(dom.innerText)
+        // 扩展：字符串截取
+        dom.innerText = dom.innerText.substring(0, dom.innerText.length-4)
+       // console.log(dom.innerText.length - 4 , 'innertext')
+        dom.innerHTML = dom.innerHTML+'...'
+        //console.log(dom.length, 'd')
+        // 扩展：删除dom节点
+        // document.body.remove(domCopy)
+        console.log(domCopy.remove(domCopy))
+        // document.body.removeChild(domCopy)
+        wordLimit()
+      } else {
+        document.body.removeChild(domCopy)
+      }
+    }
+    wordLimit()
+  </script>
+</body>
+</html>
