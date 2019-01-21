@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 模仿window文件的增加，删除 -->
+  <!-- 
+    nodes: 所有的数据
+    提出数据中的值，排序，根据索引创建不同的值
+      let maxLength = 0
+      let nowArr = []
+      // 当前有的数字
+      nodes.forEach(item => {
+        if (re.test(item.data.name)) {
+          nowArr.push(re.exec(item.data.name)[1] / 1)
+        }
+      })
+      // 升序排序
+      nowArr.sort((a,b) => a>b)
+      // [0,2,3,4]
+      for (let i = 0; i < nowArr.length; i++) {
+        const element = nowArr[i];
+        if (element !== i+1 && i !== 0) {
+          return '新建文件夹'+(i+1)
+        } else if (i === 0 && element > 0) {
+          return '新建文件夹'
+        }
+      }
+      maxLength = nowArr[nowArr.length-1]
+      // 当创建第二个的时候
+      if (maxLength === 0) {
+        maxLength = 1
+      }
+      return '新建文件夹'+(maxLength+1)
+
+   -->
+  <script>
+    var num = 0,file=[]
+    function fileNum(){
+      if (file.length <= num) {
+        file[num] = true
+        num++
+      } else if (file.length > num) {
+        var flag = false
+        for (let index = 0; index < file.length; index++) {
+          const element = file[index];
+          if (element === null) {
+            file[index] = true
+            num = index + 1;
+            flag = true
+            break;
+          }
+        }
+        if (!flag) {
+          file[file.length] = true
+          num = file.length
+        }
+      }
+    }
+    function deleteNum(n){
+      num = n
+      file[n-1] = null
+    }
+    fileNum()
+    fileNum()
+    fileNum()
+    fileNum()
+    deleteNum(3)
+    console.log(num, '文件夹数')
+  </script>
+</body>
+</html>

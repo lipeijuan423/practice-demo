@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>模仿手风琴效果</title>
+  <style>
+    .title{
+      height: 26px;
+      padding-left: 10px;
+      background-color: #ccc;
+      border-bottom: 1px solid #ff0;
+    }
+    .title_on{
+      background-color: #fff;
+    }
+    .content{
+      height: 0;
+      transition: all 1s ease-in-out;
+      overflow: hidden;
+    }
+    .acco_box {
+        width:400px;
+        border:1px solid #a0b3d6;
+    }
+    .acco_title {
+        line-height:26px;
+        padding-left:10px;
+        font-size:14px;
+        background-color:#cadbeb;
+        border-bottom:1px solid #beceeb;
+    }
+    .acco_title_on {
+        background-color:#beceeb;
+    }
+    .acco_content {
+        height:0;
+        padding:0 10px;
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+        overflow:hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="title title_on" style="height: 100px" data-index='1'>第一个</div>
+    <div class="content">内容1</div>
+    <div class="title"  data-index='2'>第二个</div>
+    <div class="content" style="height: 0">内容2</div>
+    <div class="title" data-index='3'>第三个</div>
+    <div class="content" style="height: 0">内容3</div>
+  </div>
+  <div class="acco_box">
+    <div class="acco_title acco_title_on" lang="accoContent_1">► 一个普通的文本的段落</div>
+    <div id="accoContent_1" class="acco_content" style="height:140px;">
+      <p>黄药师选婿，让郭靖和欧阳克各写一篇作文。郭靖绞尽脑汁写足五百字，心头惴惴，不料欧阳克只写了一百四十字，郭靖轻松获胜。欧阳锋大怒，一耳光甩在欧阳克脸上："s b！叫你天天写微博！" </p>
+    </div>
+    <div class="acco_title" lang="accoContent_2">► 一个有个小图的段落</div>
+    <div id="accoContent_2" class="acco_content">
+      <p>
+        <img class="headimg"  />11月24日消息，盛大旗下网站游玩网(www.uvan.com)将于11月25日正式改名为切客网，并启动新域名www.qieke.com。这也意味着游玩网将从原来的旅游社区进一步向LBS方向转型。 游玩网于今年8月正式公测，融入了微博功能，并提供基于位置的服务(LBS)，是典型的"Twitter+Foursquare"模式。
+        </p>
+    </div>
+    <div class="acco_title" lang="accoContent_3">► 纯粹两段文字</div>
+    <div id="accoContent_3" class="acco_content">
+      <p>FlowReaer今天已经在App Store上架了，请各位未越狱的朋友到App Store免费下载。</p>
+      <p>这个应用和新版的QQ阅读有点像，算是中文版的Flipboard应用，Flipboard支持的是Twitter，FlowReaer则支持新浪微博。</p>
+    </div>
+  </div>
+  <!-- 自己理解 -->
+  <script>
+    let box = document.getElementsByClassName('box')[0];
+    let content = document.getElementsByClassName('content')
+    box.onclick = function (event) {
+      console.log(event.target)
+      let index = event.target.getAttribute('data-index');
+      console.log(content[index - 1].style.height)
+      content[index-1].style.height = '100px';
+    }
+  </script>
+  <!-- 教程 -->
+  <script>
+    var $$ = function(selector){
+      var cl, id, alls, arrEle = [];
+      if (/^\./.test(selector)) {
+        cl = selector.replace('.', '');
+        alls = document.getElementsByTagName('*')
+        var l = alls.length;
+        for (let i = 0; i < l; i++) {
+          var name = alls[i].className, arrName = [];
+          if (name) {
+            arrName = name.split(' '), lName = arrName.length;
+            for(var j = 0; j < lName; j+=1){
+              if (arrName[j] === cl) {
+                arrEle.push(alls[i]);
+              }
+            }
+          }
+        }
+      } else if (/^\#/.test(selector)) {
+        id = selector.replace('#', '');
+        var o = document.getElementById(id);
+        if (o) {
+          arrEle.push(o)
+        }
+      }
+      console.log(arrEle)
+      return arrEle;
+    }
+    Array.prototype.click = function(fn){
+      var l = this.length;
+      if (l) {
+        for (let i = 0; i < l; i++) {
+          this[i].onclick = function(){
+            fn.call(this)
+          }
+        }
+      }
+    }
+    console.log($$('.acco_title'))
+    $$('.acco_title').click(function() {
+        var rel = this.lang, cl =this.className, oOn = $$(".acco_title_on")[0],rel_on = oOn.lang;
+        if (!/on/.test(cl) && rel && rel_on) {
+          console.log($$('#' + rel)[0])
+          $$('#' + rel)[0].style.height = '140px';
+          $$('#' + rel_on)[0].style.height = 0;
+          this.className = 'acco_title acco_title_on';
+          oOn.className = 'acco_title';
+        }
+    })
+    
+  </script>
+</body>
+</html>
