@@ -13,7 +13,7 @@
       }
       promise[st ? '_value' : '_reason'] = value;
       promise['_resolves'] = promise['_rejects'] = undefined;
-    })
+    },0)
   }
   var done = function () {
    // 保证抛出最后一个错误

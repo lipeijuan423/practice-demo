@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>多文件下载</title>
+</head>
+<body>
+  <p onclick="load('D:\#1.docx')">按钮</p>
+  <a href="http://www.w3school.com.cn/i/w3school_logo_white.gif" download="df">1312</a>
+  <a href="http://www.w3school.com.cn/i/w3school_logo_white.gif" download="w3logo">
+    1
+  </a>
+  <script>
+    function load(url){
+      console.log('fsda')
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      a.click();
+      console.log(a)
+    }
+  </script>
+</body>
+</html>
