@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jQuery的重载</title>
+</head>
+<body>
+  <script>
+	function addMethod(obj, name, fun) {
+		// old undefined     obj.find fun0
+		// old fun0 			obj.find fun1
+		// old fun1				 obj.find fun2
+		var old = obj[name];
+		//  -- 闭包
+		obj[name] = function () {
+			if (fun.length === arguments.length) {
+				return fun.apply(this, arguments); 
+			} else {
+				// old将一切串起来
+				return old.apply(this, arguments);
+			}
+		}
+	}
+    var obj = {
+		name: [1,2,3,4]
+	}
+	function find0 () {
+		return this.name;
+	}
+	function find1 (num) {
+		console.log('我有一个参数'+num);
+	}
+	function find2(num1,num2) {
+		console.log('我有两个参数' + num1 + num2);
+	}
+	addMethod(obj, 'find', find0);
+	addMethod(obj, 'find', find1);
+	addMethod(obj, 'find', find2);
+
+
+	console.log(obj.find(''))
+	console.log(obj, 'obj')
+  </script>
+</body>
+</html>
