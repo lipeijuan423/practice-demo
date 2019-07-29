@@ -30,7 +30,7 @@
     var instance = new SubType('lpj', 22)
     /*  寄生组合继承： 为了解决组合继承调用两次SuperType 超类型构造函数 */
     function inheritancePrototype (subType, superType) {
-        var prototype = object(superType.prototype); // 创建对象
+        var prototype = Object(superType.prototype); // 创建对象
         prototype.constructor = subType; // 增强对象
         subType.prototype = prototype; // 指定对象
     }
