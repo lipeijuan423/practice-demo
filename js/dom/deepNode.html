@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>遍历文本所有节点</title>
+</head>
+<body class="root">
+<div>
+	<p>lll</p>
+	<ul>
+		<li>d</li>
+		<li>d</li>
+		<li>d</li>
+		<li>d
+			<div>222
+				<ul>
+					<li>232</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</div>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<script type="text/javascript">
+	// 深度遍历
+	// function deepLogTagName (node) {
+	// 	console.log(node.tagName)
+	// 	for (var i = 0; i < node.childNodes.length; i++) {
+	// 		deepLogTagName(node.childNodes[i])
+	// 	}
+	// }
+	// deepLogTagName(document.body)
+
+/*	function deepLogTagName (parentNode) {
+		console.log(parentNode.tagName)
+		const childNodes = parentNode.childNodes
+		Array.prototype.filter.call(childNodes, item => item.tagName).forEach(itemNode => {
+			deepLogTagName(itemNode)
+		})
+	}
+	deepLogTagName(document.body)*/
+
+	/*广度遍历*/
+	// function wideTraversal(node){
+	// 	var nodes = [];
+	// 	if (node != null) {
+	// 		var queue = [];
+	// 		queue.unshift(node);
+	// 		while(queue.length != 0){
+	// 			var item = queue.shift();
+	// 			nodes.push(item);
+	// 			var childNodes = item.children;
+	// 			for (var i = 0; i < childNodes.length; i++) {
+	// 				queue.push(childNodes[i])
+	// 			}
+	// 		}
+	// 	}
+	// 	return nodes
+	// }
+	function breadLogTagNames (root) {
+		const queue = [root];
+		while(queue.length){
+			const currentNode = queue.shift();
+			let childNodes = currentNode.children
+			let tagName = currentNode.tagName
+			console.log(currentNode.tagName)
+			// const {childNodes, tagName} = {currentNode.children, currentNode.tagName} && console.log(currentNode.tagName)
+			Array.prototype.filter.call(childNodes, item => item.tagName).forEach(itemNode => {
+				queue.push(itemNode)
+			})
+		}
+	}
+	breadLogTagNames(document.body)
+// console.log(wideTraversal(document.body)); 
+</script>
+</body>
+</html>
