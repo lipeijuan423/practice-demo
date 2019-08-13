@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* 没实现 */
+  /* .floater {
+    float:left; 
+    height:50%; 
+    margin-bottom:-120px;
+}
+.content {
+    clear:both; 
+    height:240px; 
+    position:relative;
+} */
+/* 居中垂直 */
+/* .box9{
+    display: -webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+    -webkit-box-orient: vertical;
+    text-align: center
+} */
+.grid-container{
+  /* display: grid;
+  align-items:center;
+  height: 100px; *//* !! */
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+}
+.son{
+  grid-row: 2;
+  grid-column: 2;
+}
+  </style>
+</head>
+<body>
+  <div class="content"> Content here </div>
+  <div class="floater"></div>
+  <div class="grid-container">
+    <div class="son">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, sit provident. Facilis dolore ratione unde distinctio neque deleniti, consequuntur velit inventore porro odio sapiente, praesentium cumque! Quo porro repellendus ipsam.</div>
+  </div>
+</body>
+</html>

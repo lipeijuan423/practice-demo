@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>file文件</title>
+</head>
+<body>
+    <input type="file" id="file-list">
+    <p id="output"></p>
+    <p id="progress"></p>
+    <script>
+        var fileList = document.getElementById('file-list');
+        // 添加事件兼容性
+        fileList.addEventListener('change', function (event) {
+            // event对象兼容
+            var files = event.target.files,
+                info = '',
+                output = document.getElementsById('output'),
+                progress = document.getElementById('progress'),
+                type = 'default',
+                reader = new FileReader(),
+                i = {},
+                len = files.length;
+            // 基础属性
+            while(i < len) {
+                console.log('文件姓名' + files[i].name + '类型：' + files[i].type + '大小' + files[i].size + '最后一次修改时间' + files[i].lastModifiedDate);
+                i ++ ;
+            }
+
+        })
+    </script>
+</body>
+</html>
