@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>检测对象特性</title>
+</head>
+<body>
+    <script>
+        /* IE8之前 dom 对象是宿主对象 函数是COM对象 */
+        function isHostMethod(object, property){
+            var t = typeof object[property];
+            return t == 'funciton' || !!((t == 'object' && object[property])) || t == 'unknown'
+        }
+    </script>
+</body>
+</html>

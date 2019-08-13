@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>区分浏览器的几种相关距离</title>
+    <style>
+        .parents{
+            padding: 8px;
+            margin: 10px;
+            height: 200px;
+            position: relative;
+            border:solid 7px #000; 
+            overflow: auto;
+        }
+        .son{
+            width: 1000px;
+            height: 200px;
+            background-color: #ff0;
+            padding: 10px;
+            margin: 20px;
+            border: 1px solid #f00;
+        }
+        .sonTopLeft{
+            width: 1000px;
+            height: 200px;
+            background-color: #f0f;
+            padding: 10px;
+            margin: 20px;
+            border: 1px solid #ff0;
+        }
+    </style>
+</head>
+<body>
+    <div class="parents">
+        <div class="son"></div>
+        <div class="sonTopLeft"></div>
+    </div>
+    <script>
+        /* 
+            client:
+                Height/Width 元素内的尺寸    （元素内容 + 内边距）ie: 包括边框 padding-box
+                Left/Top 元素内边距和边框外边缘的距离 （边框的宽度）
+            offset:
+                Height/Width 元素外的尺寸    （元素内容 + 内边距 + 边框） border-box
+                Left/Top 该元素边框左上角（边框外边缘）和已定位的父元素offsetParents的左上角（边框内边缘）的距离
+            scroll: 
+                Height/Width 元素内容区域    （元素内容 + 内边距 + 溢出--自身的padding） ie10 firfox:不包括下padding
+                Top/Left 元素滚动条位置
+            inner:
+                Height/Width 视口尺寸
+            getBoundingClientRect() 当前元素外边距 + 其他元素到文档的距离
+        
+        */
+        var div = document.getElementsByClassName('son')[0];
+        var divTL = document.getElementsByClassName('sonTopLeft')[0];
+        var divParents = document.getElementsByClassName('parents')[0];
+        /* 元素 */
+        div.innerHTML += 'clientWidth' + div.clientWidth + '<br/>'
+        div.innerHTML += 'clientHeight' + div.clientHeight + '<br/>'
+        div.innerHTML += 'offsetWidth' + div.offsetWidth + '<br/>'
+        div.innerHTML += 'offsetHeight' + div.offsetHeight + '<br/>'
+        div.innerHTML += 'scrollWidth' + div.scrollWidth + '<br/>'
+        div.innerHTML += 'scrollHeight' + div.scrollHeight + '<br/>'
+        div.innerHTML += 'divParents-scrollWidth' + divParents.scrollWidth + '<br/>'
+        div.innerHTML += 'divParents-scrollHeight' + divParents.scrollHeight + '<br/>'
+        /* 距离 */
+        div.innerHTML += 'clientTop' + divTL.clientTop + '<br/>'
+        divTL.innerHTML += 'clientLeft' + divTL.clientLeft + '<br/>'
+        divTL.innerHTML += 'offsetTop' + divTL.offsetTop + '<br/>'
+        divTL.innerHTML += 'offsetLeft' + divTL.offsetLeft + '<br/>'
+        divTL.innerHTML += 'scrollTop' + divTL.scrollTop + '<br/>'
+        divTL.innerHTML += 'scrollLeft' + divTL.scrollLeft + '<br/>'
+        divTL.innerHTML += 'divParents-scrollTop' + divParents.scrollTop + '<br/>'
+        divTL.innerHTML += 'divParents-scrollLeft' + divParents.scrollLeft + '<br/>'
+        /* 视口 */
+        div.innerHTML += 'innerWidth' + window.innerWidth + '<br/>'
+        div.innerHTML += 'innerHeight' + window.innerHeight + '<br/>'
+        div.innerHTML += 'offset' + div.offset + '<br/>'
+        /* 文档坐标 */
+        divTL.innerHTML += 'getBoundingClientRect:' + divTL.getBoundingClientRect().top
+
+        console.log(getBoundingClientRect(divTL))
+        /* 减去视口的scrollTop，是为了防止调用这个函数时窗口被滚动了。 */
+        /* 在IE8以及低版本的IE中，会认为(2,2)为文档的左上角，
+            其余的浏览器则会以(0,0)作为左上角，所以在不同的浏览器中要对该起点坐标进行统一化处理。 */
+        function getBoundingClientRect(element) {
+            var scrollTop = document.documentElement.scrollTop;
+            var scrollLeft = document.documentElement.scrollLeft;
+            // 检测属性，没有就自定义
+            if (element.getBoundingClientRect) {
+                /* callee是arguments对象的一个属性、用来指向当前执行的函数。 */
+                console.log(arguments.callee, 'arguments.callee')
+                if (typeof arguments.callee.offset != 'number') {
+                    var temp = document.createElement('div');
+                    temp.style.cssText = 'position: absolute;top:0;left:0;';
+                    document.body.appendChild(temp);
+                    arguments.callee.offset = -temp.getBoundingClientRect().top - scrollTop; // !temp.getBoundingClientRect().top = 0
+                    document.body.removeChild(temp);
+                    temp = null;
+                }
+                var rect = element.getBoundingClientRect();
+                var offset = arguments.callee.offset;
+                return {
+                    top: rect.top + offset,
+                    bottom: rect.bottom + offset,
+                    left: rect.left + offset,
+                    right: rect.right + offset
+                }
+            } else {
+                var actualLeft = getElementLeft(element);
+                var actualTop = getElementTop(element);
+                return {
+                    top: actualTop - scrollTop,
+                    bottom: actualTop + element.offsetHeight - scrollTop,
+                    left: actualLeft - scrollLeft,
+                    right: actualLeft + element.offsetWidth - scrollLeft
+                }
+            }
+        }
+        divParents.onscroll = function(){
+            console.log(getBoundingClientRect(divTL))
+            console.log(divTL.getBoundingClientRect().top, 'divTL.getBoundingClientRect().top')
+            divTL.innerHTML += 'getBoundingClientRect:' + divTL.getBoundingClientRect().top
+
+        }
+    </script>
+</body>
+</html>

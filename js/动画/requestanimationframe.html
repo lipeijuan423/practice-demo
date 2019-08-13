@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>h5-requestAnimationFrame</title>
+    <style>
+        #status{
+            background: #f00;
+        }
+    </style>
+</head>
+<body>
+    <div id="status" style="width: 10%">dfdsafs</div>
+    <script>
+        /* function updateProgress () {
+            var div = document.getElementById('status');
+            let width = div.style.width
+            div.style.width = (parseInt(String(width)) + 5) + '%';
+            if (div.style.width !== '100%') {
+                requestAnimationFrame(updateProgress);
+            }
+        }
+        requestAnimationFrame(updateProgress); */
+        // 绘制时间
+      /*   function draw(timestamp){
+            var diff = timestamp - startTime;
+            console.log(startTime)
+            startTime = timestamp;
+            console.log(diff)
+            // requestAnimationFrame(draw);
+        }
+        var startTime = Animation.startTime;
+        requestAnimationFrame(draw); */
+        var start = null;
+        var element = document.getElementById('status');
+        element.style.position = 'absolute';
+        function step(timestamp){
+            if (!start) {
+                start = timestamp;
+            }
+            var progress = timestamp - start;
+            element.style.left = Math.min(progress / 10, 200) + 'px';
+            if (progress < 2000) {
+                window.requestAnimationFrame(step);
+            }
+        }
+        window.requestAnimationFrame(step);
+    </script>
+</body>
+</html>

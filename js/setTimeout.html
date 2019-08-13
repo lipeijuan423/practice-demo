@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>间歇调用和超时调用</title>
+</head>
+<body>
+    <script>
+        /* 超时调用替代间歇 */
+        var num = 0;
+        var max = 10;
+        var intervalId = null;
+        function incrementNumber(){
+            num ++;
+            /* if (num === max) {
+                clearInterval(intervalId);
+            } */
+            if (num < max) {
+                setTimeout(incrementNumber, 1000);
+            } else {
+                console.log('结束')
+            }
+        }
+        // intervalId = setInterval(incrementNumber, 1000);
+        setTimeout(incrementNumber, 1000);
+
+    </script>
+</body>
+</html>

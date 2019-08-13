@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>富文本编辑</title>
+</head>
+<body>
+    <iframe name="richedit" src="./richedit" style="width: 100x; height: 100px;"  frameborder="0">2</iframe>
+    <script>
+        window.onload = function(){
+            console.log(frames['richedit'], 'd')
+            frames['richedit'].document.designMode = 'on';
+        }
+        frames['richedit'].document.execCommand('bold', false, null)
+    </script>
+</body>
+</html>

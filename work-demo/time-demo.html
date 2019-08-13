@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>倒计时</title>
+</head>
+<body>
+    <p></p>
+    <script>
+        var endTime = Date.parse(new Date('2018-10-17 23:59:59'));
+        var serverTimeOne = Date.parse(new Date('2018-10-16 15:40:00'));
+        // 时间差是不是为定值
+        var deviceTime = Date.parse(new Date('2018-10-16 15:50:00'));
+        var time = Math.abs(deviceTime - serverTimeOne);
+        function timer (serverTime) {
+            var distance = endTime - serverTime
+            var day = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor(distance / (1000 *60 * 60) % 24);
+            var minutes = Math.floor(distance / (1000 *60) % 60);
+            var seconds = Math.floor(distance / 1000 % 60);
+            console.log(day + ':' + hours + ':' + minutes + ':' + seconds)
+        }
+      
+        function getDate () {
+            var nowDate = Date.parse(new Date())
+            var timerChange = 0
+            if (deviceTime > serverTimeOne) {
+                timerChange = nowDate - time
+            } else {
+                timerChange = nowDate + time
+            }
+            setTimeout(() => {
+                timer(timerChange);
+                getDate()
+            }, 1000);
+        }
+        getDate()
+    </script>
+</body>
+</html>

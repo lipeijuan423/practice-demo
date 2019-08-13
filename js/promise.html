@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function a(){
+        console.log('a');
+    }
+    function b(){
+        console.log('b');
+    }
+
+    function c(){
+        console.log('c');
+    }
+    function d(){
+        console.log('d');
+    }
+    var p1 = new Promise(function (resolve) {
+        setTimeout(function () {
+            resolve("Hello");
+        }, 3000);
+    });
+
+    var p2 = new Promise(function (resolve) {
+        setTimeout(function () {
+            resolve("World");
+        }, 1000);
+    });
+    function myPromise(){
+        let p=new Promise((resolve,reject)=>{
+            let num=Math.ceil(Math.random()*10);
+            if(num<=5){
+                resolve(c());
+            }else{
+                reject(d());
+            }
+        })
+        return p;
+    }
+    /*结果表示当resolve 执行 then就执行，reject 执行catch就执行*/
+    myPromise()
+        .then(function(d){
+            console.log('我是then');
+        })
+        .catch(function(){
+            console.log('我是catch');
+        });
+    // all是并行执行多个异步操作，等执行完才会下一步
+    //Promise.all 可以接收一个元素为 Promise 对象的数组作为参数，当这个数组里面所有的 Promise 对象都变为 resolve 时，该方法才会返回。如果有一个rejected状态，则返回第一个错误信息
+    //Promise.race，它同样接收一个数组，不同的是只要该数组中的 Promise 对象的状态发生变化（无论是 resolve 还是 reject）该方法都会返回。
+    Promise
+        .all([p1,p2])
+        .then(function(result){
+            console.log(result);
+        })
+</script>
+</body>
+</html>
