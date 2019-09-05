@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>flex基础布局</title>
+  <style>
+    .parent-ul{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .parent-ul li {
+      width: 20%;
+      background-color: aqua;
+    }
+    .one{
+      flex: 1;
+    }
+    .two{
+      flex: 2;
+    }
+    .three{
+      flex: 3;
+    }
+    .four{
+      flex: 4;
+    }
+  </style>
+</head>
+<body>
+  <ul class="parent-ul">
+    <li class="one">第一个</li>
+    <li class="two">第二个</li>
+    <li class="three">第三个</li>
+    <li class="four">第四个</li>
+  </ul>
+</body>
+</html>
