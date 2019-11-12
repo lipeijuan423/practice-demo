@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>双向链表</title>
+  </head>
+  <body>
+    <script>
+      function Node(element) {
+        this.element = element;
+        this.next = null;
+        this.previous = null;
+      }
+      function LList() {
+        this.head = new Node("head");
+        this.find = find;
+        this.insert = insert;
+        this.display = display;
+        this.removeItem = removeItem;
+        this.displReverse = displReverse;
+        this.findLast = findLast;
+      }
+      function find(item) {
+        var currNode = this.head;
+        while (currNode.element != item) {
+          currNode = currNode.next;
+        }
+        return currNode;
+      }
+      function insert(newElement, item) {
+        var newNode = new Node(newElement);
+        var current = this.find(item);
+        newNode.next = current.next;
+        newNode.previous = current;
+        current.next = newNode;
+        if (!newNode.next == null) {
+          newNode.next.previous = newNode;
+        }
+      }
+      function display() {
+        var currNode = this.head;
+        while (currNode.next != null) {
+          console.log(currNode.next.element);
+          currNode = currNode.next;
+        }
+      }
+      function removeItem(item) {
+        var currNode = this.find(item);
+        if (!(currNode.next == null)) {
+          currNode.previous.next = currNode.next;
+          currNode.next.previous = currNode.previous;
+          currNode.next = null;
+          currNode.previous = null;
+        } else {
+          currNode.previous.next = null;
+          currNode.previous = null;
+        }
+      }
+      function findLast() {
+        var currNode = this.head;
+        while (!(currNode.next == null)) {
+          currNode = currNode.next;
+        }
+        return currNode;
+      }
+      function displReverse() {
+        var currNode = this.findLast();
+        while (!(currNode.previous == null)) {
+          console.log(currNode.element);
+          currNode = currNode.previous;
+        }
+      }
+      var cities = new LList();
+      cities.insert("first", "head");
+      cities.insert("second", "first");
+      cities.insert("third", "second");
+      cities.display();
+
+      console.log("========");
+      cities.removeItem("second");
+      cities.display();
+      cities.displReverse();
+    </script>
+  </body>
+</html>
