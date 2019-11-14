@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>二叉树</title>
+  </head>
+  <body>
+    <script>
+      function Node(data, left, right) {
+        this.data = data;
+        this.left = left;
+        this.right = right;
+        this.show = show;
+      }
+      function show() {
+        return this.data;
+      }
+      function BST() {
+        this.insert = insert;
+        this.inOrder = inOrder;
+        this.getMax = getMax;
+        this.getSmall = getSmall;
+        this.find = find;
+        this.remove = remove;
+      }
+      function insert(data) {
+        var n = new Node(data, null, null);
+        if (this.root == null) {
+          this.root = n;
+        } else {
+          var current = this.root;
+          var parent;
+          while (true) {
+            parent = current;
+            if (data < current.data) {
+              current = current.left;
+              if (current == null) {
+                parent.left = n;
+                break;
+              }
+            } else {
+              current = current.right;
+              if (current == null) {
+                parent.right = n;
+                break;
+              }
+            }
+          }
+        }
+      }
+      // 中序遍历
+      function inOrder(node) {
+        if (node != null) {
+          inOrder(node.left);
+          console.log(node.data);
+          inOrder(node.right);
+        }
+      }
+      function getSmall(root) {
+        var current = this.root || root;
+        while (current.left != null) {
+          current = current.left;
+        }
+        return current.data;
+      }
+      function getMax(root) {
+        var current = this.root || root;
+        while (current.right != null) {
+          current = current.right;
+        }
+        return current.data;
+      }
+      function find(data) {
+        var current = this.root;
+        while (current != null) {
+          if ((current.data = data)) {
+            return current;
+          } else if (data < current.data) {
+            current = current.left;
+          } else {
+            current = current.right;
+          }
+        }
+        return null;
+      }
+      function remove(data) {
+        removeNode(this.root, data);
+      }
+      function removeNode(node, data) {
+        if (node == null) {
+          return null;
+        }
+        if (data == node.data) {
+          if (node.left == null && node.right == null) {
+            return null;
+          }
+          if (node.left == null) {
+            return node.right;
+          }
+          if (node.right == null) {
+            return node.left;
+          }
+          var tempNode = getSmall(node.right);
+          node.data = tempNode.data;
+          node.right = removeNode(node.right, tempNode.data);
+          return node;
+        } else if (data < node.data) {
+          node.left = removeNode(node.left, data);
+          return node;
+        } else {
+          node.right = removeNode(node.right, data);
+          return node;
+        }
+      }
+
+      var nums = new BST();
+      nums.insert(23);
+      nums.insert(45);
+      nums.insert(16);
+      nums.insert(13);
+      nums.insert(26);
+      nums.insert(36);
+      nums.insert(66);
+      console.log(nums.inOrder(nums.root));
+      console.warn("min", nums.getSmall());
+      console.warn("max", nums.getMax());
+      console.log("remove", nums.remove(23));
+      console.log("show", nums.inOrder(nums.root));
+    </script>
+  </body>
+</html>

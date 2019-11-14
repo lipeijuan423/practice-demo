@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>散列</title>
+  </head>
+  <body>
+    <script>
+      function HashTable() {
+        this.table = new Array(137);
+        this.simpleHash = simpleHash;
+        this.showHash = showHash;
+        this.put = put;
+        this.get = get;
+        this.betterHash = betterHash;
+        this.buildChains = buildChains;
+      }
+      function simpleHash(data) {
+        var total = 0;
+        for (var i = 0; i < data.length; i++) {
+          total += data.charCodeAt(i);
+        }
+        return total % this.table.length;
+      }
+      function betterHash() {
+        var H = 31;
+        var total = 0;
+        for (var i = 0; i < data.length; i++) {
+          total += H * total + data.charCodeAt(i);
+        }
+        if (total < 0) {
+          total += this.table.length - 1;
+        }
+        return total % this.table.length;
+      }
+      function buildChains() {
+        for (var i = 0; i < this.table.length; i++) {
+          this.table[i] = new Array();
+        }
+      }
+      function put(data) {
+        var pos = this.simpleHash(data);
+        if (this.table[pos] == undefined) {
+          this.table[pos] = data;
+        } else {
+          while (this.table[pos] != undefined) {
+            pos++;
+          }
+          this.table[pos] = data;
+        }
+        // var index = 0;
+        // if (this.table[pos][index] == undefined) {
+        //   this.table[pos][index] = data;
+        //   index++;
+        // } else {
+        //   while (this.table[pos][index] != undefined) {
+        //     ++index;
+        //   }
+        //   this.table[pos][index] = data;
+        // }
+      }
+      function get(key) {
+        var hash = this.simpleHash(key);
+        for (var i = hash; i < this.table.length; i++) {
+          if (this.table[i] == key) {
+            return;
+          }
+        }
+        return undefined;
+        return this.table[this.simpleHash[key]];
+      }
+      function showHash() {
+        var n = 0;
+        for (var i = 0; i < this.table.length; i++) {
+          if (this.table[i] != undefined) {
+            console.log("键是" + i + "值是" + this.table[i]);
+          }
+        }
+      }
+      var hTable = new HashTable();
+      // hTable.buildChains();
+      hTable.put("china");
+      hTable.put("achin");
+      hTable.put("china1");
+      hTable.put("china2");
+      hTable.showHash();
+    </script>
+  </body>
+</html>
