@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>插入排序</title>
+  </head>
+  <body>
+    <script>
+      var CArray = function() {
+        this.dataStore = [1, 5, 2, 6, 0, 9, 8, 7, 5, 3];
+        this.insertSort = insertSort;
+      };
+
+      function insertSort() {
+        var temp, inner;
+        // 外循环将数组挨个移动
+        for (var outer = 1; outer < this.dataStore.length; outer++) {
+          temp = this.dataStore[outer];
+          inner = outer;
+          // 将外循环和
+          while (inner > 0 && this.dataStore[inner - 1] >= temp) {
+            this.dataStore[inner] = this.dataStore[inner - 1];
+            console.log("内部数据", this.dataStore);
+            inner--;
+          }
+          this.dataStore[inner] = temp;
+          console.log("数据", this.dataStore);
+        }
+      }
+      var mynums = new CArray();
+      mynums.insertSort();
+      console.log("最终数据", mynums.dataStore);
+    </script>
+  </body>
+</html>
