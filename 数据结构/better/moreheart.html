@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>贪心算法</title>
+  </head>
+  <body>
+    <script>
+      // 找零: 50 10 5 1
+      function makeChange(originRmb, coins) {
+        var remainRmb = 0;
+        if (originRmb % 50 < originRmb) {
+          coins[3] = parseInt(originRmb % 50, 10);
+          remainRmb = originRmb % 50;
+          originRmb = remainRmb;
+        }
+        if (originRmb % 10 < originRmb) {
+          coins[2] = parseInt(originRmb % 10, 10);
+          remainRmb = originRmb % 10;
+          originRmb = remainRmb;
+        }
+        if (originRmb % 5 < originRmb) {
+          coins[1] = parseInt(originRmb % 5, 10);
+          remainRmb = originRmb % 5;
+          originRmb = remainRmb;
+        }
+        coins[0] = originRmb % 1;
+      }
+      var originRmb = 63;
+      var coins = [];
+      makeChange(originRmb, coins);
+      if (coins[3] > 0) {
+        console.log("继续使用10块找零");
+      }
+      if (coins[2] > 0) {
+        console.log("继续使用5块找零");
+      }
+      if (coins[1] > 0) {
+        console.log("继续使用1块找零");
+      }
+      if (coins[0] == 0) {
+        console.log("找完了");
+      }
+    </script>
+  </body>
+</html>
